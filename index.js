@@ -42,9 +42,9 @@ function getWinners(callback) {
     let games = callback(fifaData)
     let winners = games.map(game => {
         if (game["Home Team Goals"] > game["Away Team Goals"]){
-            return game["Home Team Name"]
+            return game["Home Team Initials"]
         }else if (game["Home Team Goals"] < game["Away Team Goals"]){
-            return game["Away Team Name"]
+            return game["Away Team Initials"]
         }
     })
     return winners
@@ -59,34 +59,47 @@ Parameters:
  * callback function getYears
  */
 
-function getWinnersByYear(/* code here */) {
+function getWinnersByYear(cb1, cb2) {
+    let yr = cb1(getFinals)
+    let country = cb2(getFinals)
+    let newArray = yr.map((e, i) => 'In ' + e +' '+ country[i] +' won the world cup!' );
+    console.log(newArray)
 
+    
 };
 
-getWinnersByYear();
+getWinnersByYear(getYears, getWinners);
 
 /* Task 7: Create a function called `getCountryWins` that takes the parameters `data` and `team initials` and returns the number of world cup wins that country has had. 
 
 Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
-function getCountryWins(/* code here */) {
-
-    /* code here */
-
+function getCountryWins(data, teamInitials) {
+    let count = data.reduce (function(n, val) {
+        return n + (val === teamInitials);
+    }, 0)
+    console.log(count)
 };
 
-getCountryWins();
+getCountryWins(getWinners(getFinals), "ITA");
 
 /* Task 8: Write a function called `getAverageGoals` that accepts a parameter `data` and returns the the average number of home team goals and away team goals scored per match (Hint: use .reduce and do this in 2 steps) */
 
-function getAverageGoals(/* code here */) {
-
-    /* code here */
-
+function getAverageGoals(data) {
+    let avgHome = data.reduce((n, val) => {
+        let sum = n + val["Home Team Goals"];
+        return sum; 
+    }, 0);
+    let avgAway = data.reduce((n, val) => {
+        let sum = n + val["Away Team Goals"];
+        return sum;
+    }, 0);
+    console.log(avgHome / data.length);
+    console.log(avgAway / data.length);
 };
 
-getAverageGoals();
+getAverageGoals(fifaData);
 
 
 /// STRETCH 🥅 //
