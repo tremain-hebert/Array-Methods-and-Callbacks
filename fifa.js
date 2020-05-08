@@ -18720,5 +18720,5 @@ export const fifaData = [
     "MatchID": 300186502,
     "Home Team Initials": "BRA",
     "Away Team Initials": "NED"
-  },
-]
+  }
+];
